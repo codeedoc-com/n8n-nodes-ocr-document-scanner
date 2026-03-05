@@ -102,7 +102,7 @@ export class OcrDocumentScanner implements INodeType {
 
 				// Prepare HMAC Signature
 				const timestamp = Date.now().toString();
-				const signaturePayload = `POST\n/user/document/scan\n${timestamp}\n`;
+				const signaturePayload = `POST::/v1/scan/document::${timestamp}::`;
 
 				const hmac = crypto.createHmac('sha256', credentials.secretKey as string);
 				hmac.update(signaturePayload);
@@ -120,7 +120,7 @@ export class OcrDocumentScanner implements INodeType {
 
 				// Combine baseUrl with endpoint path. Ensure no double slashes.
 				const baseUrl = (credentials.baseUrl as string).replace(/\/$/, '');
-				const url = `${baseUrl}/user/document/scan`;
+				const url = `${baseUrl}/v1/scan/document`;
 
 				const response = await fetch(url, {
 					method: 'POST',
